@@ -14,8 +14,8 @@ jobs:
   fs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: aquasecurity/trivy-action@0.28.0
+      - uses: actions/checkout@{"message":"Not Found","documentation_url":"https://docs.github.com/rest/git/tags#get-a-tag","status":"404"} # v4.2.2
+      - uses: aquasecurity/trivy-action@{"message":"Not Found","documentation_url":"https://docs.github.com/rest/git/refs#get-a-reference","status":"404"} # 0.28.0
         with:
           scan-type: fs
           scan-ref: .
@@ -23,7 +23,7 @@ jobs:
           output: trivy.sarif
           severity: MEDIUM,HIGH,CRITICAL
           ignore-unfixed: true
-      - uses: github/codeql-action/upload-sarif@v3
+      - uses: github/codeql-action/upload-sarif@df409f7d9260372bd5f19e5b04e83cb3c43714ae # v3.27.9
         with:
           sarif_file: trivy.sarif
           category: trivy-fs
