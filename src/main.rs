@@ -53,14 +53,11 @@ mod tests {
 
     #[tokio::test]
     async fn version_handler_serializes_pkg_version() {
-        let Json(Version { version }) = version().await;
-        assert_eq!(version, env!("CARGO_PKG_VERSION"));
+        let body = version().await;
+        assert_eq!(body.0.version, env!("CARGO_PKG_VERSION"));
         assert_eq!(
-            serde_json::to_value(Version {
-                version: env!("CARGO_PKG_VERSION"),
-            })
-            .unwrap(),
-            json!({ "version": env!("CARGO_PKG_VERSION") })
+            serde_json::to_value(&body.0).unwrap(),
+            json!({ "version": "0.1.0" })
         );
     }
 }
