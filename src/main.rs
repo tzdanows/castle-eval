@@ -21,6 +21,15 @@ async fn healthz() -> &'static str {
     "ok"
 }
 
+#[derive(Serialize)]
+struct Version {
+    version: &'static str,
+}
+
+async fn version() -> Json<Version> {
+    Json(Version { version: env!("CARGO_PKG_VERSION") })
+}
+
 async fn slug(Path(text): Path<String>) -> Json<Slug> {
     Json(Slug { slug: slugify(&text) })
 }
@@ -34,6 +43,23 @@ pub fn app() -> Router {
         .route("/healthz", get(healthz))
         .route("/slug/{text}", get(slug))
         .route("/sum", post(sum))
+        .route("/version", get(version))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    #[tokio::test]
+    async fn version_handler_serializes_pkg_version() {
+        let body = version().await;
+        assert_eq!(body.0.version, env!("CARGO_PKG_VERSION"));
+        assert_eq!(
+            serde_json::to_value(&body.0).unwrap(),
+            json!({ "version": "0.1.0" })
+        );
+    }
 }
 
 #[tokio::main]
