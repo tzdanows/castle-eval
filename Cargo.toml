@@ -11,4 +11,4 @@ tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 # Pinned on purpose: GHSA-m5pq-gvj9-9vr8 / RUSTSEC-2022-0013 (fixed in 1.5.5).
-regex = "=1.5.4"
+regex = "=1.5.5"
