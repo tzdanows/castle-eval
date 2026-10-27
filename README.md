@@ -9,5 +9,13 @@ account. Nothing here is real.
 
 ```
 cargo test
-cargo run   # 127.0.0.1:3000: GET /healthz, GET /slug/{text}, POST /sum {"values":[1,2]}
+cargo run   # 127.0.0.1:3000: GET /healthz, GET /slug/{text}, GET /version, POST /sum {"values":[1,2]}
+```
+
+## GET /version
+
+Returns the crate version from `Cargo.toml` as JSON:
+
+```json
+{"version":"0.1.0"}
 ```
