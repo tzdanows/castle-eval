@@ -9,5 +9,5 @@ account. Nothing here is real.
 
 ```
 cargo test
-cargo run   # 127.0.0.1:3000: GET /healthz, GET /slug/{text}, POST /sum {"values":[1,2]}
+cargo run   # 127.0.0.1:3000: GET /healthz, GET /greet/{name} -> "Hello, <name>!", GET /slug/{text}, POST /sum {"values":[1,2]}
 ```
