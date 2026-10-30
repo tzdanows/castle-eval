@@ -30,6 +30,10 @@ async fn version() -> Json<Version> {
     Json(Version { version: env!("CARGO_PKG_VERSION") })
 }
 
+async fn greet(Path(name): Path<String>) -> String {
+    format!("Hello, {name}!")
+}
+
 async fn slug(Path(text): Path<String>) -> Json<Slug> {
     Json(Slug { slug: slugify(&text) })
 }
@@ -41,6 +45,7 @@ async fn sum(Json(req): Json<SumRequest>) -> Json<SumResponse> {
 pub fn app() -> Router {
     Router::new()
         .route("/healthz", get(healthz))
+        .route("/greet/{name}", get(greet))
         .route("/slug/{text}", get(slug))
         .route("/sum", post(sum))
         .route("/version", get(version))
@@ -50,6 +55,12 @@ pub fn app() -> Router {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[tokio::test]
+    async fn greet_handler_returns_greeting() {
+        let body = greet(Path("World".to_string())).await;
+        assert_eq!(body, "Hello, World!");
+    }
 
     #[tokio::test]
     async fn version_handler_serializes_pkg_version() {
